@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "408115008073",
+    "project_id": "maepaulistana-8c207",
+    "storage_bucket": "maepaulistana-8c207.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:408115008073:android:9fd74154f73ec77f672598",
+        "android_client_info": {
+          "package_name": "com.mamaepaulistana"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "408115008073-3449aajs2mhqu9caubb9pq69istthh81.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwTkShCMwCyCyWXO_MKPWoNI6Fl5uaGj8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "408115008073-3449aajs2mhqu9caubb9pq69istthh81.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

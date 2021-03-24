@@ -44,10 +44,16 @@ const Home: () => React$Node = ({navigation}) => {
               <Text style={styles.sectionTitle}>Gestantes</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Consultas')}>
-              <Text style={styles.sectionTitle}>Consultas</Text>
+              <Text style={styles.sectionTitle}>Lançar Consultas</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Vacinas')}>
               <Text style={styles.sectionTitle}>Vacinas</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Exames')}>
+              <Text style={styles.sectionTitle}>Exames</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('FinalizarAcompanhamento')}>
+              <Text style={styles.sectionTitle}>Finalizar Acompanhamento</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>

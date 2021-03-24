@@ -9,7 +9,8 @@
 import React from 'react';
 
 import {database} from '../Setup';
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import {listarGestantes} from '../src/services/apiService';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {
   SafeAreaView,
   StyleSheet,
@@ -17,7 +18,8 @@ import {
   View,
   Text,
   StatusBar,
-  TextInput
+  TextInput,
+  ActivityIndicator
 } from 'react-native';
 import { Button, Header, Container, Content, Right, Title, Left, Body, ListItem } from 'native-base';
 
@@ -28,72 +30,100 @@ const Gestantes: () => React$Node = ({navigation}) => {
   const [TextPesquisa, setTextPesquisa] = React.useState('');
 
   React.useEffect(() => {
-    const gestantesRef = database().ref('gestantes/');
-    const OnLoadingListener = gestantesRef.on('value', (snapshot) => {
-      setGestantes([]);
-      snapshot.forEach(function (childSnapshot){
-        setGestantes((Gestantes) => [...Gestantes, childSnapshot.val()]);
-      });
-    });
-    
-    setFilteredGestantes([...Gestantes]);
-
-    return () => {
-      gestantesRef.off('value', OnLoadingListener);
+    const getGestantes = async () => {
+      const gestantes = await listarGestantes();
+      setGestantes(gestantes);
     }
+    getGestantes();
   }, []);
 
   React.useEffect(() => {
-    /*const filtrados = filteredGestantes.filter((item) => {
-      return item.Name.includes(TextPesquisa);
-    });
-    console.log(filtrados);*/
-    if(TextPesquisa !== '') {
+    if(filteredGestantes.length === 0){
+      setFilteredGestantes([...Gestantes]);
+    }
+  },[Gestantes])
+
+  React.useEffect(() => {
+    if(TextPesquisa === '') {
+      setFilteredGestantes([...Gestantes]);
+    } else {
       const filtrados = filteredGestantes.filter((item) => {
         return item.Name.includes(TextPesquisa);
       });
+  
       setFilteredGestantes([...filtrados]);
-    } else {
-      setFilteredGestantes([...Gestantes]);
+
     }
   }, [TextPesquisa])
-
-  /*const handlePesquisa = (event) => {
-    setTextPesquisa(event);
-    
-    const filtrados = filteredGestantes.filter((item) => {
-      return item.Name.includes(TextPesquisa);
-    });
-    setFilteredGestantes(filtrados);
-  }*/
   
   return (
     <>
-      <Container>
-        <Content>
-          <TextInput placeholder="Pesquisar" value={TextPesquisa} onChangeText={text => setTextPesquisa(text)} />
-          <ScrollView>
-          {filteredGestantes.map((item, index) => (
-            <ListItem key={item.Id}  onPress={() => navigation.navigate('DetalhesGestante', {id: item.Id})}> 
-              <Body>
-                <Text>{'Nome: '}{item.Name}</Text>
-                <Text>{'Dt. Nasc: '}{item.DOB}</Text>
-              </Body>
-            </ListItem>
-          ))}
-          </ScrollView>
-          <Button style={styles.ButtonNovoRegistro} onPress={() => navigation.navigate('CadastrarGestantes')}>
-            <Text style={styles.ButtonText}>Novo Cadastro</Text>
-          </Button>
-        </Content>
-      </Container>
+        <View style={styles.Content}>
+          <View style={styles.searchContainer}>
+            <Icon style={styles.searchIcon} name="search" size={25} />
+            <TextInput style={styles.searchInput} placeholder="Pesquisar" value={TextPesquisa} onChangeText={text => setTextPesquisa(text)} />
+          </View>
+          <View style={styles.ListContainer}>
+            <ScrollView>
+            {filteredGestantes.length === 0 && <ActivityIndicator size="large" color="#0000ff" />}
+            {filteredGestantes.map((item, index) => (
+              <ListItem bottomDivider={false} key={item.Id}  onPress={() => navigation.navigate('DetalhesGestante', {id: item.Id})}> 
+                <Body style={styles.List}>
+                  <Text>{item.Name}</Text>
+                </Body>
+              </ListItem>
+            ))}
+            </ScrollView>
+          </View>
+          <View style={styles.ButtonContainer}>
+            <Button style={styles.ButtonNovoRegistro} onPress={() => navigation.navigate('CadastrarGestantes')}>
+              <Text style={styles.ButtonText}>Novo Cadastro</Text>
+            </Button>
+          </View>
+        </View>
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  Header: {
+  Content: {
+    height: '100%',
+    flex: 1,
+    flexDirection: 'column',
     backgroundColor: '#fff',
+  },
+  searchContainer: {
+    height: '20%',
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderStyle: 'solid',
+    borderColor: '#f1f1f1',
+    borderWidth: 1,
+    backgroundColor: '#f1f1f1'
+  },
+  searchIcon: {
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    color: '#595959',
+    borderStyle: 'solid',
+    borderRightWidth: 1,
+    borderColor: '#cecece',
+  },
+  searchInput: {
+    paddingLeft: 10,
+    paddingBottom: 5,
+    paddingTop: 0,
+    margin: 5,
+    fontSize: 16,
+    height: '90%',
+    width: '87%',
+  },
+  ListContainer: {
+    height: '80%',
+  },
+  ButtonContainer: {
+    height: '10%',
   },
   ButtonNovoRegistro: {
     width: '100%',
@@ -105,7 +135,7 @@ const styles = StyleSheet.create({
   ButtonText: {
     textTransform: 'uppercase',
     color: '#fff'
-  }
+  },
 });
 
 export default Gestantes;

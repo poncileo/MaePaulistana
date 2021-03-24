@@ -9,6 +9,7 @@
 import React from 'react';
 
 import {database} from '../Setup';
+import { cadastrarGestante } from '../src/services/apiService';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import {
   SafeAreaView,
@@ -26,7 +27,7 @@ const DetalhesGestante: () => React$Node = ({navigation, route}) => {
 
   const [Id, setId] = React.useState();
   const [isEditing, setIsEditing] = React.useState(false);
-  const [Nome, setNome] = React.useState('');
+  const [Name, setName] = React.useState('');
   const [newNome, setNewNome] = React.useState('');
   const [DOB, setDOB] = React.useState();
   const [DUM, setDUM] = React.useState();
@@ -40,7 +41,8 @@ const DetalhesGestante: () => React$Node = ({navigation, route}) => {
     const gestantesRef = database().ref(`gestantes/${route.params.id}`);
     gestantesRef.on('value', (snapshot) => {
       const gestante = snapshot.val();
-      setNome(gestante.Name);
+      setId(gestante.Id);
+      setName(gestante.Name);
       setDOB(gestante.DOB);
       setDUM(gestante.DUM);
       setDPP(gestante.DPP);
@@ -51,47 +53,61 @@ const DetalhesGestante: () => React$Node = ({navigation, route}) => {
   }, [])
 
   const salvarCadastro = () => {
-    alert('alo');
+    cadastrarGestante(Id, Name, DOB, DUM, DPP, SisPreNatal, SUS )
+      .then((result) => {
+        setId(gestante.Id);
+      setName(gestante.Name);
+      setDOB(gestante.DOB);
+      setDUM(gestante.DUM);
+      setDPP(gestante.DPP);
+      setSisPreNatal(gestante.SisPreNatal);
+      setSUS(gestante.SUS)
+      setQntConsultas(gestante.QntConsultas);
+      setIsEditing(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
   
   return (
     <>
       <Container>
-        <Content>
+        <Content style={{backgroundColor: '#fff'}}>
           <View style={styles.EditarContainer}>
             <Button onPress={() => setIsEditing(true)} style={isEditing ? styles.ButtonEditarInativo : styles.ButtonEditar} disabled={isEditing}>
               <Icon name="edit" size={20} color="#FFF"/>
               <Text style={styles.ButtonText}>Editar</Text>
             </Button>
           </View>
-          <View>
+          <View style={styles.FieldsContainer}>
             <Text>Nome:</Text>
-            <TextInput value={Nome} onChangeText={text => setNome(text)} editable={isEditing} />
+            <TextInput style={styles.InputField} value={Name} onChangeText={text => setName(text)} editable={isEditing} />
           </View>
-          <View>
+          <View  style={styles.FieldsContainer}>
             <Text>Data de Nascimento:</Text>
-            <TextInputMask value={DOB} type={'datetime'} options={{format: 'DD/MM/YYYY'}} 
+            <TextInputMask style={styles.InputField} value={DOB} type={'datetime'} options={{format: 'DD/MM/YYYY'}} 
             onChangeText={text => setDOB(text)} editable={isEditing} />
           </View>
-          <View>
+          <View  style={styles.FieldsContainer}>
             <Text>Data da Última Menstruação:</Text>
-            <TextInputMask value={DUM} type={'datetime'} options={{format: 'DD/MM/YYYY'}} 
+            <TextInputMask style={styles.InputField} value={DUM} type={'datetime'} options={{format: 'DD/MM/YYYY'}} 
             onChangeText={text => setDUM(text)} editable={isEditing} />
           </View>
-          <View>
+          <View  style={styles.FieldsContainer}>
             <Text>Data Prevista para o Parto:</Text>
-            <TextInputMask value={DPP} type={'datetime'} options={{format: 'DD/MM/YYYY'}} 
+            <TextInputMask style={styles.InputField} value={DPP} type={'datetime'} options={{format: 'DD/MM/YYYY'}} 
             onChangeText={text => setDPP(text)} editable={isEditing} />
           </View>
-          <View>
+          <View  style={styles.FieldsContainer}>
             <Text>Nº SIS Pré Natal:</Text>
-            <TextInput value={SisPreNatal} onChangeText={text => setSisPreNatal(text)} editable={isEditing} />
+            <TextInput style={styles.InputField} value={SisPreNatal} onChangeText={text => setSisPreNatal(text)} editable={isEditing} />
           </View>
-          <View>
+          <View  style={styles.FieldsContainer}>
             <Text>Nº SUS:</Text>
-            <TextInput value={SUS} onChangeText={text => setSUS(text)} editable={isEditing} />
+            <TextInput style={styles.InputField} value={SUS} onChangeText={text => setSUS(text)} editable={isEditing} />
           </View>
-          <View>
+          <View  style={styles.FieldsContainer}>
             <Text>Quantidade de consultas atendidas:</Text>
             <Text>{QntConsultas}</Text>
           </View>
@@ -113,18 +129,18 @@ const styles = StyleSheet.create({
   Header: {
     backgroundColor: '#fff',
   },
+  FieldsContainer: {
+    padding: 5,
+    marginBottom: 5,
+  },
+  InputField: {
+    backgroundColor: '#f1f1f1'
+  },
   EditarContainer: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'flex-end'
-  },
-  ButtonNovoRegistro: {
-    width: '100%',
-    margin: 'auto',
-    backgroundColor: '#666',
-    display: 'flex',
-    justifyContent: 'center'
   },
   ButtonText: {
     textTransform: 'uppercase',
@@ -147,10 +163,6 @@ const styles = StyleSheet.create({
   },
   ButtonCancelar: {
     backgroundColor: '#666666',
-  },
-  ButtonText: {
-    textTransform: 'uppercase',
-    color: '#fff'
   },
   ButtonEditar: {
     backgroundColor: '#666',

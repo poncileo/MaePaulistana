@@ -35,3 +35,18 @@ export const cadastrarGestante = (Id, Name, DOB, DUM, DPP, SisPreNatal, SUS, Qnt
       });
   });
 }
+
+export const listarGestantes = () => {
+  return new Promise(function(resolve, reject) {
+    let listGestantes = [];
+    const gestantesRef = database().ref('gestantes/');
+
+    gestantesRef.once('value')
+    .then(snapshot => {
+      snapshot.forEach(function (childSnapshot) {
+        listGestantes = [...listGestantes, childSnapshot.val()];
+      });
+      resolve(listGestantes);
+    }).catch((err) => reject(err));
+  });
+}

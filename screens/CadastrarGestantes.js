@@ -18,6 +18,7 @@ import {
   Text,
   StatusBar,
   TextInput,
+  Alert,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Button, Header, Container, Content, Right, Title, Left, Body, Label } from 'native-base';
@@ -37,9 +38,13 @@ const CadastrarGestantes: () => React$Node = ({navigation}) => {
   const [DPP, setDPP] = React.useState();
   const [SisPreNatal, setSisPreNatal] = React.useState('');
   const [SUS, setSUS] = React.useState('');
+  const [errorMessage, setErrorMessage] = React.useState('');
 
   const salvarCadastro = () => {
-    cadastrarGestante(Id, Name, DOB, DUM, DPP, SisPreNatal, SUS )
+    if( Name === '' || DOB === '' || DUM === '' || DPP === '' || SisPreNatal === '' || SUS === '' ){
+      setErrorMessage('Todos os campos são obrigatórios!');
+    } else {
+      cadastrarGestante(Id, Name, DOB, DUM, DPP, SisPreNatal, SUS )
       .then((result) => {
         setId(null);
         setName('');
@@ -48,10 +53,17 @@ const CadastrarGestantes: () => React$Node = ({navigation}) => {
         setDPP('');
         setSisPreNatal('');
         setSUS('');
+        showSuccessAlert();
       })
       .catch((error) => {
         console.log(error);
       });
+    }
+  }
+
+  const showSuccessAlert = () => {
+    setErrorMessage('');
+    Alert.alert('','Cadastro efetuado com sucesso!');
   }
 
   const onChangeDOB = (event, selectedDOB) => {
@@ -66,33 +78,45 @@ const CadastrarGestantes: () => React$Node = ({navigation}) => {
   
   return (
     <>
-      <Container>
-        <Content>
-          <TextInput placeholder="Nome" value={Name} onChangeText={Name => setName(Name)} />
-          <TextInputMask value={DOB} type={'datetime'} options={{format: 'DD/MM/YYYY'}} placeholder="Data de Nascimento" onChangeText={DOB => setDOB(DOB)} />
-          <TextInputMask value={DUM} type={'datetime'} options={{format: 'DD/MM/YYYY'}} placeholder="Data da Última Menstruação" onChangeText={DUM => setDUM(DUM)} />
-          <TextInputMask value={DPP} type={'datetime'} options={{format: 'DD/MM/YYYY'}} placeholder="Data prevista para o Parto" onChangeText={DPP => setDPP(DPP)} />
-          <TextInput placeholder="Nº SIS Pré Natal" value={SisPreNatal} onChangeText={SisPreNatal => setSisPreNatal(SisPreNatal)} />
-          <TextInput placeholder="Nº SUS" value={SUS} onChangeText={SUS => setSUS(SUS)} />
-          <View style={styles.ButtonContainer}>
-              <Button style={[styles.Button, styles.ButtonCancelar]} onPress={() => navigation.goBack()}>
-                <Text style={styles.ButtonText}>Cancelar</Text>
-              </Button>
-              <Button style={[styles.Button, styles.ButtonCadastrar]} onPress={salvarCadastro}>
-                <Text style={styles.ButtonText}>Cadastrar</Text>
-              </Button>
-          </View>
-        </Content>
-      </Container>
+      <View style={{height: '100%', backgroundColor: '#fff'}}>
+        <View style={styles.InputsContainer}>
+          <TextInput style={styles.TextInput} placeholder="Nome" value={Name} onChangeText={Name => setName(Name)} />
+          <TextInputMask style={styles.TextInput} value={DOB} type={'datetime'} options={{format: 'DD/MM/YYYY'}} placeholder="Data de Nascimento" onChangeText={DOB => setDOB(DOB)} />
+          <TextInputMask style={styles.TextInput} value={DUM} type={'datetime'} options={{format: 'DD/MM/YYYY'}} placeholder="Data da Última Menstruação" onChangeText={DUM => setDUM(DUM)} />
+          <TextInputMask style={styles.TextInput} value={DPP} type={'datetime'} options={{format: 'DD/MM/YYYY'}} placeholder="Data prevista para o Parto" onChangeText={DPP => setDPP(DPP)} />
+          <TextInput style={styles.TextInput} placeholder="Nº SIS Pré Natal" value={SisPreNatal} onChangeText={SisPreNatal => setSisPreNatal(SisPreNatal)} />
+          <TextInput style={styles.TextInput} placeholder="Nº SUS" value={SUS} onChangeText={SUS => setSUS(SUS)} />
+          <Text style={{color: '#ff0000'}}>{errorMessage}</Text>
+        </View>
+        <View style={styles.ButtonContainer}>
+            <Button style={[styles.Button, styles.ButtonCancelar]} onPress={() => navigation.goBack()}>
+              <Text style={styles.ButtonText}>Cancelar</Text>
+            </Button>
+            <Button style={[styles.Button, styles.ButtonCadastrar]} onPress={salvarCadastro}>
+              <Text style={styles.ButtonText}>Cadastrar</Text>
+            </Button>
+        </View>
+      </View>
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  Header: {
-    backgroundColor: '#fff',
+  InputsContainer: {
+    height: '90%',
+  },
+  TextInput: {
+    padding: 10,
+    margin: 5,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#f1f1f1',
+    borderRadius: 5,
+    fontSize: 16,
+    backgroundColor: '#f1f1f1'
   },
   ButtonContainer: {
+    height: '10%',
     display: 'flex',
     flexDirection: 'row',
     margin: 'auto',

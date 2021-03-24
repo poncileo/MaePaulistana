@@ -29,7 +29,7 @@ import {
   ReloadInstructions,
   Header,
 } from 'react-native/Libraries/NewAppScreen';
-import {Home, Gestantes, CadastrarGestantes, DetalhesGestante, Consultas, Vacinas, FinalizarAcompanhamento} from './screens';
+import {Home, Gestantes, CadastrarGestantes, DetalhesGestante, Consultas, Vacinas, Exames, FinalizarAcompanhamento} from './screens';
 import { Button } from 'native-base';
 import { Icon } from 'react-native-vector-icons/MaterialIcons';
 
@@ -51,10 +51,12 @@ const App: () => React$Node = () => {
           headerTitle: 'Cadastro',
         }}  />
         <Stack.Screen name="Consultas" component={Consultas} options={{
-          headerTitle: '',
+          headerTitle: 'Lançar Consultas',
         }} />
         <Stack.Screen name="Vacinas" component={Vacinas} />
-        <Stack.Screen name="FinalizarAcompanhamento" component={FinalizarAcompanhamento} />
+        <Stack.Screen name="Exames" component={Exames} />
+        <Stack.Screen name="FinalizarAcompanhamento" component={FinalizarAcompanhamento}
+        options={{ headerTitle: 'Finalizar Acompanhamento' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

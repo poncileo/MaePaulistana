@@ -9,10 +9,10 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 
 import database from '@react-native-firebase/database';
-  
+
 import {
   SafeAreaView,
   StyleSheet,
@@ -29,34 +29,95 @@ import {
   ReloadInstructions,
   Header,
 } from 'react-native/Libraries/NewAppScreen';
-import {Home, Gestantes, CadastrarGestantes, DetalhesGestante, Consultas, Vacinas, Exames, FinalizarAcompanhamento} from './screens';
-import { Button } from 'native-base';
-import { Icon } from 'react-native-vector-icons/MaterialIcons';
+import {
+  Home,
+  Gestantes,
+  CadastrarGestantes,
+  DetalhesGestante,
+  Consultas,
+  Vacinas,
+  Exames,
+  Medicos,
+  CadastrarMedicos,
+  DetalhesMedico,
+  FinalizarAcompanhamento,
+  PessoasFisicas,
+} from './screens';
+import {Button} from 'native-base';
+import {Icon} from 'react-native-vector-icons/MaterialIcons';
 
 const App: () => React$Node = () => {
-
   const Stack = createStackNavigator();
-  
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={Home} options={{headerTitle: 'Mãe Paulistana',}}/>
-        <Stack.Screen name="Gestantes" component={Gestantes} options={{
-          headerTitle: 'Gestantes',
-        }}  />
-        <Stack.Screen name="DetalhesGestante" component={DetalhesGestante} options={{
-          headerTitle: 'Detalhes',
-        }}  />
-        <Stack.Screen name="CadastrarGestantes" component={CadastrarGestantes} options={{
-          headerTitle: 'Cadastro',
-        }}  />
-        <Stack.Screen name="Consultas" component={Consultas} options={{
-          headerTitle: 'Lançar Consultas',
-        }} />
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{headerTitle: 'Mãe Paulistana'}}
+        />
+        <Stack.Screen
+          name="Gestantes"
+          component={Gestantes}
+          options={{
+            headerTitle: 'Gestantes',
+          }}
+        />
+        <Stack.Screen
+          name="DetalhesGestante"
+          component={DetalhesGestante}
+          options={{
+            headerTitle: 'Detalhes',
+          }}
+        />
+        <Stack.Screen
+          name="CadastrarGestantes"
+          component={CadastrarGestantes}
+          options={{
+            headerTitle: 'Cadastro',
+          }}
+        />
+        <Stack.Screen
+          name="Medicos"
+          component={Medicos}
+          options={{
+            headerTitle: 'Médicos',
+          }}
+        />
+        <Stack.Screen
+          name="DetalhesMedico"
+          component={DetalhesMedico}
+          options={{
+            headerTitle: 'Detalhes',
+          }}
+        />
+        <Stack.Screen
+          name="CadastrarMedicos"
+          component={CadastrarMedicos}
+          options={{
+            headerTitle: 'Cadastro',
+          }}
+        />
+        <Stack.Screen
+          name="Consultas"
+          component={Consultas}
+          options={{
+            headerTitle: 'Lançar Consultas',
+          }}
+        />
         <Stack.Screen name="Vacinas" component={Vacinas} />
         <Stack.Screen name="Exames" component={Exames} />
-        <Stack.Screen name="FinalizarAcompanhamento" component={FinalizarAcompanhamento}
-        options={{ headerTitle: 'Finalizar Acompanhamento' }} />
+        <Stack.Screen
+          name="FinalizarAcompanhamento"
+          component={FinalizarAcompanhamento}
+          options={{headerTitle: 'Finalizar Acompanhamento'}}
+        />
+        <Stack.Screen
+          name="PessoasFisicas"
+          component={PessoasFisicas}
+          options={{headerTitle: 'Pessoas Físicas'}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

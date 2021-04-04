@@ -33,7 +33,7 @@ import {
   ListItem,
 } from 'native-base';
 
-const Gestantes: () => React$Node = ({navigation}) => {
+const Medicos: () => React$Node = ({navigation}) => {
   const [Gestantes, setGestantes] = React.useState([]);
   const [filteredGestantes, setFilteredGestantes] = React.useState([]);
   const [TextPesquisa, setTextPesquisa] = React.useState('');
@@ -163,4 +163,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Gestantes;
+export default Medicos;

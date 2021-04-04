@@ -29,7 +29,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import {Button} from 'native-base';
 
-const Home: () => React$Node = ({navigation}) => {
+const PessoasFisicas: () => React$Node = ({navigation}) => {
   return (
     <>
       <StatusBar barStyle="dark-content" backgroundColor="white" />
@@ -40,28 +40,13 @@ const Home: () => React$Node = ({navigation}) => {
           <View style={styles.body}>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => navigation.navigate('PessoasFisicas')}>
-              <Text style={styles.sectionTitle}>Pessoas Físicas</Text>
+              onPress={() => navigation.navigate('Gestantes')}>
+              <Text style={styles.sectionTitle}>Gestantes</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => navigation.navigate('Consultas')}>
-              <Text style={styles.sectionTitle}>Lançar Consultas</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => navigation.navigate('Vacinas')}>
-              <Text style={styles.sectionTitle}>Vacinas</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => navigation.navigate('Exames')}>
-              <Text style={styles.sectionTitle}>Exames</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => navigation.navigate('FinalizarAcompanhamento')}>
-              <Text style={styles.sectionTitle}>Finalizar Acompanhamento</Text>
+              onPress={() => navigation.navigate('Medicos')}>
+              <Text style={styles.sectionTitle}>Médicos</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -119,4 +104,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default PessoasFisicas;

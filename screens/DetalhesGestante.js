@@ -50,28 +50,28 @@ const DetalhesGestante: () => React$Node = ({navigation, route}) => {
     const gestantesRef = database().ref(`gestantes/${route.params.id}`);
     gestantesRef.on('value', (snapshot) => {
       const gestante = snapshot.val();
-      setId(Id);
-      setName(Name);
-      setDOB(DOB);
-      setDUM(DUM);
-      setDPP(DPP);
-      setSisPreNatal(SisPreNatal);
-      setSUS(SUS);
-      setQntConsultas(QntConsultas);
+      setId(gestante.Id);
+      setName(gestante.Name);
+      setDOB(gestante.DOB);
+      setDUM(gestante.DUM);
+      setDPP(gestante.DPP);
+      setSisPreNatal(gestante.SisPreNatal);
+      setSUS(gestante.SUS);
+      setQntConsultas(gestante.QntConsultas);
     });
   }, []);
 
   const salvarCadastro = () => {
     cadastrarGestante(Id, Name, DOB, DUM, DPP, SisPreNatal, SUS)
       .then((result) => {
-        setId(gestante.Id);
-        setName(gestante.Name);
-        setDOB(gestante.DOB);
-        setDUM(gestante.DUM);
-        setDPP(gestante.DPP);
-        setSisPreNatal(gestante.SisPreNatal);
-        setSUS(gestante.SUS);
-        setQntConsultas(gestante.QntConsultas);
+        setId(Id);
+        setName(Name);
+        setDOB(DOB);
+        setDUM(DUM);
+        setDPP(DPP);
+        setSisPreNatal(SisPreNatal);
+        setSUS(SUS);
+        setQntConsultas(QntConsultas);
         setIsEditing(false);
       })
       .catch((error) => {

@@ -9,7 +9,7 @@
 import React from 'react';
 
 import {database} from '../Setup';
-import {listarGestantes} from '../src/services/apiService';
+import {listarMedicos} from '../src/services/apiService';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {
   SafeAreaView,
@@ -34,33 +34,33 @@ import {
 } from 'native-base';
 
 const Medicos: () => React$Node = ({navigation}) => {
-  const [Gestantes, setGestantes] = React.useState([]);
-  const [filteredGestantes, setFilteredGestantes] = React.useState([]);
+  const [Medicos, setMedicos] = React.useState([]);
+  const [filteredMedicos, setFilteredMedicos] = React.useState([]);
   const [TextPesquisa, setTextPesquisa] = React.useState('');
 
   React.useEffect(() => {
-    const getGestantes = async () => {
-      const gestantes = await listarGestantes();
-      setGestantes(gestantes);
+    const getMedicos = async () => {
+      const medicos = await listarMedicos();
+      setMedicos(medicos);
     };
-    getGestantes();
+    getMedicos();
   }, []);
 
   React.useEffect(() => {
-    if (filteredGestantes.length === 0) {
-      setFilteredGestantes([...Gestantes]);
+    if (filteredMedicos.length === 0) {
+      setFilteredMedicos([...Medicos]);
     }
-  }, [Gestantes]);
+  }, [Medicos]);
 
   React.useEffect(() => {
     if (TextPesquisa === '') {
-      setFilteredGestantes([...Gestantes]);
+      setFilteredMedicos([...Medicos]);
     } else {
-      const filtrados = filteredGestantes.filter((item) => {
+      const filtrados = filteredMedicos.filter((item) => {
         return item.Name.includes(TextPesquisa);
       });
 
-      setFilteredGestantes([...filtrados]);
+      setFilteredMedicos([...filtrados]);
     }
   }, [TextPesquisa]);
 
@@ -78,15 +78,15 @@ const Medicos: () => React$Node = ({navigation}) => {
         </View>
         <View style={styles.ListContainer}>
           <ScrollView>
-            {filteredGestantes.length === 0 && (
-              <ActivityIndicator size="large" color="#0000ff" />
+            {filteredMedicos.length === 0 && (
+              <ActivityIndicator size="large" color="#ff0000" />
             )}
-            {filteredGestantes.map((item, index) => (
+            {filteredMedicos.map((item, index) => (
               <ListItem
                 bottomDivider={false}
                 key={item.Id}
                 onPress={() =>
-                  navigation.navigate('DetalhesGestante', {id: item.Id})
+                  navigation.navigate('DetalhesMedico', {id: item.Id})
                 }>
                 <Body style={styles.List}>
                   <Text>{item.Name}</Text>
@@ -98,7 +98,7 @@ const Medicos: () => React$Node = ({navigation}) => {
         <View style={styles.ButtonContainer}>
           <Button
             style={styles.ButtonNovoRegistro}
-            onPress={() => navigation.navigate('CadastrarGestantes')}>
+            onPress={() => navigation.navigate('CadastrarMedicos')}>
             <Text style={styles.ButtonText}>Novo Cadastro</Text>
           </Button>
         </View>

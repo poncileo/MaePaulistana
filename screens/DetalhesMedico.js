@@ -9,7 +9,7 @@
 import React from 'react';
 
 import {database} from '../Setup';
-import {cadastrarGestante} from '../src/services/apiService';
+import {cadastrarMedicos} from '../src/services/apiService';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {
   SafeAreaView,
@@ -37,41 +37,24 @@ const DetalhesMedico: () => React$Node = ({navigation, route}) => {
   const [Id, setId] = React.useState();
   const [isEditing, setIsEditing] = React.useState(false);
   const [Name, setName] = React.useState('');
-  const [newNome, setNewNome] = React.useState('');
-  const [DOB, setDOB] = React.useState();
-  const [DUM, setDUM] = React.useState();
-  const [DPP, setDPP] = React.useState();
-  const [SisPreNatal, setSisPreNatal] = React.useState('');
-  const [SUS, setSUS] = React.useState('');
-  const [QntConsultas, setQntConsultas] = React.useState();
+  const [CRM, setCRM] = React.useState('');
 
-  //setId(route.params.Id);
   React.useEffect(() => {
-    const gestantesRef = database().ref(`gestantes/${route.params.id}`);
-    gestantesRef.on('value', (snapshot) => {
-      const gestante = snapshot.val();
-      setId(gestante.Id);
-      setName(gestante.Name);
-      setDOB(gestante.DOB);
-      setDUM(gestante.DUM);
-      setDPP(gestante.DPP);
-      setSisPreNatal(gestante.SisPreNatal);
-      setSUS(gestante.SUS);
-      setQntConsultas(gestante.QntConsultas);
+    const medicosRef = database().ref(`medicos/${route.params.id}`);
+    medicosRef.on('value', (snapshot) => {
+      const medico = snapshot.val();
+      setId(medico.Id);
+      setName(medico.Name);
+      setCRM(medico.CRM);
     });
   }, []);
 
   const salvarCadastro = () => {
-    cadastrarGestante(Id, Name, DOB, DUM, DPP, SisPreNatal, SUS)
+    cadastrarMedicos(Id, Name, CRM)
       .then((result) => {
-        setId(gestante.Id);
-        setName(gestante.Name);
-        setDOB(gestante.DOB);
-        setDUM(gestante.DUM);
-        setDPP(gestante.DPP);
-        setSisPreNatal(gestante.SisPreNatal);
-        setSUS(gestante.SUS);
-        setQntConsultas(gestante.QntConsultas);
+        setId(Id);
+        setName(Name);
+        setCRM(CRM);
         setIsEditing(false);
       })
       .catch((error) => {
@@ -104,59 +87,13 @@ const DetalhesMedico: () => React$Node = ({navigation, route}) => {
             />
           </View>
           <View style={styles.FieldsContainer}>
-            <Text>Data de Nascimento:</Text>
-            <TextInputMask
-              style={styles.InputField}
-              value={DOB}
-              type={'datetime'}
-              options={{format: 'DD/MM/YYYY'}}
-              onChangeText={(text) => setDOB(text)}
-              editable={isEditing}
-            />
-          </View>
-          <View style={styles.FieldsContainer}>
-            <Text>Data da Última Menstruação:</Text>
-            <TextInputMask
-              style={styles.InputField}
-              value={DUM}
-              type={'datetime'}
-              options={{format: 'DD/MM/YYYY'}}
-              onChangeText={(text) => setDUM(text)}
-              editable={isEditing}
-            />
-          </View>
-          <View style={styles.FieldsContainer}>
-            <Text>Data Prevista para o Parto:</Text>
-            <TextInputMask
-              style={styles.InputField}
-              value={DPP}
-              type={'datetime'}
-              options={{format: 'DD/MM/YYYY'}}
-              onChangeText={(text) => setDPP(text)}
-              editable={isEditing}
-            />
-          </View>
-          <View style={styles.FieldsContainer}>
-            <Text>Nº SIS Pré Natal:</Text>
+            <Text>CRM:</Text>
             <TextInput
               style={styles.InputField}
-              value={SisPreNatal}
-              onChangeText={(text) => setSisPreNatal(text)}
+              value={CRM}
+              onChangeText={(text) => setCRM(text)}
               editable={isEditing}
             />
-          </View>
-          <View style={styles.FieldsContainer}>
-            <Text>Nº SUS:</Text>
-            <TextInput
-              style={styles.InputField}
-              value={SUS}
-              onChangeText={(text) => setSUS(text)}
-              editable={isEditing}
-            />
-          </View>
-          <View style={styles.FieldsContainer}>
-            <Text>Quantidade de consultas atendidas:</Text>
-            <Text>{QntConsultas}</Text>
           </View>
           {isEditing && (
             <View style={styles.ButtonContainer}>

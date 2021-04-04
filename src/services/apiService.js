@@ -94,10 +94,14 @@ export const listarMedicos = () => {
   });
 };
 
-export const cadastrarMedicos = (Name, CRM) => {
+export const cadastrarMedicos = (Id, Name, CRM) => {
   return new Promise(function (resolve, reject) {
     let key;
-    key = database().ref().push().key;
+    if (Id != null) {
+      key = Id;
+    } else {
+      key = database().ref().push().key;
+    }
 
     let dataToSave = {
       Id: key,

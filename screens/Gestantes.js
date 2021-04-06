@@ -95,13 +95,13 @@ const Gestantes: () => React$Node = ({navigation}) => {
             ))}
           </ScrollView>
         </View>
-        <View style={styles.ButtonContainer}>
+        {/* <View style={styles.ButtonContainer}>
           <Button
             style={styles.ButtonNovoRegistro}
             onPress={() => navigation.navigate('CadastrarGestantes')}>
             <Text style={styles.ButtonText}>Novo Cadastro</Text>
           </Button>
-        </View>
+        </View> */}
       </View>
     </>
   );

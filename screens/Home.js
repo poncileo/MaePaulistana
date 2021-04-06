@@ -28,12 +28,14 @@ import {
   Header,
 } from 'react-native/Libraries/NewAppScreen';
 import {Button} from 'native-base';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import MaterialDesignIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Home: () => React$Node = ({navigation}) => {
   return (
     <>
       <StatusBar barStyle="dark-content" backgroundColor="white" />
-      <SafeAreaView>
+      <SafeAreaView style={{backgroundColor: '#fff', height: '100%'}}>
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
@@ -41,26 +43,56 @@ const Home: () => React$Node = ({navigation}) => {
             <TouchableOpacity
               style={styles.button}
               onPress={() => navigation.navigate('PessoasFisicas')}>
+              <MaterialIcon
+                name="people"
+                size={30}
+                color="#000"
+                style={styles.buttonIcon}
+              />
               <Text style={styles.sectionTitle}>Pessoas Físicas</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.button}
               onPress={() => navigation.navigate('Consultas')}>
+              <MaterialIcon
+                name="assignment"
+                size={30}
+                color="#000"
+                style={styles.buttonIcon}
+              />
               <Text style={styles.sectionTitle}>Lançar Consultas</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.button}
               onPress={() => navigation.navigate('Vacinas')}>
+              <MaterialDesignIcon
+                name="needle"
+                size={30}
+                color="#000"
+                style={styles.buttonIcon}
+              />
               <Text style={styles.sectionTitle}>Vacinas</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.button}
               onPress={() => navigation.navigate('Exames')}>
+              <MaterialIcon
+                name="description"
+                size={30}
+                color="#000"
+                style={styles.buttonIcon}
+              />
               <Text style={styles.sectionTitle}>Exames</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.button}
               onPress={() => navigation.navigate('FinalizarAcompanhamento')}>
+              <MaterialIcon
+                name="person-remove"
+                size={30}
+                color="#000"
+                style={styles.buttonIcon}
+              />
               <Text style={styles.sectionTitle}>Finalizar Acompanhamento</Text>
             </TouchableOpacity>
           </View>
@@ -72,14 +104,14 @@ const Home: () => React$Node = ({navigation}) => {
 
 const styles = StyleSheet.create({
   scrollView: {
-    backgroundColor: Colors.lighter,
+    backgroundColor: '#fff',
   },
   engine: {
     position: 'absolute',
     right: 0,
   },
   body: {
-    backgroundColor: Colors.white,
+    backgroundColor: '#fff',
   },
   sectionContainer: {
     marginTop: 32,
@@ -109,13 +141,19 @@ const styles = StyleSheet.create({
   },
   button: {
     color: Colors.dark,
-    marginTop: 32,
-    paddingHorizontal: 24,
+    marginTop: 20,
+    marginHorizontal: 0,
+    paddingHorizontal: 5,
     paddingVertical: 25,
     borderColor: '#ddd',
     borderStyle: 'solid',
     borderWidth: 1,
     backgroundColor: '#eee',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  buttonIcon: {
+    paddingHorizontal: 10,
   },
 });
 

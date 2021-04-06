@@ -20,6 +20,7 @@ import {
   View,
   Text,
   StatusBar,
+  TouchableOpacity,
 } from 'react-native';
 
 import {
@@ -44,7 +45,7 @@ import {
   PessoasFisicas,
 } from './screens';
 import {Button} from 'native-base';
-import {Icon} from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const App: () => React$Node = () => {
   const Stack = createStackNavigator();
@@ -60,9 +61,20 @@ const App: () => React$Node = () => {
         <Stack.Screen
           name="Gestantes"
           component={Gestantes}
-          options={{
+          options={({navigation}) => ({
             headerTitle: 'Gestantes',
-          }}
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={() => navigation.navigate('CadastrarGestantes')}>
+                <Icon
+                  name="person-add"
+                  size={30}
+                  color="#000"
+                  style={{marginHorizontal: 10}}
+                />
+              </TouchableOpacity>
+            ),
+          })}
         />
         <Stack.Screen
           name="DetalhesGestante"
@@ -81,9 +93,20 @@ const App: () => React$Node = () => {
         <Stack.Screen
           name="Medicos"
           component={Medicos}
-          options={{
+          options={({navigation}) => ({
             headerTitle: 'Médicos',
-          }}
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={() => navigation.navigate('CadastrarMedicos')}>
+                <Icon
+                  name="person-add"
+                  size={30}
+                  color="#000"
+                  style={{marginHorizontal: 10}}
+                />
+              </TouchableOpacity>
+            ),
+          })}
         />
         <Stack.Screen
           name="DetalhesMedico"
